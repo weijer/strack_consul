@@ -1,0 +1,22 @@
+{
+    "name": "strack/consul",
+    "description": "strack framwork consul assembly",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Weijer Cheng",
+            "email": "weiwei163@foxmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "strack\\consul\\": "src/"
+        }
+    },
+    "require": {
+        "php": ">=5.4",
+        "yurunsoft/yurun-http" : "^v4.2.0",
+        "ext-json": "*"
+    }
+}
