@@ -9,7 +9,6 @@
             "email": "weiwei163@foxmail.com"
         }
     ],
-    "minimum-stability": "dev",
     "autoload": {
         "psr-4": {
             "strack\\consul\\": "src/"
@@ -17,7 +16,7 @@
     },
     "require": {
         "php": ">=7.1",
-        "yurunsoft/yurun-http" : "~4.2",
+        "yurunsoft/yurun-http" : "~4.0",
         "ext-json": "*"
     }
 }
