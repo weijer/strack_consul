@@ -16,7 +16,7 @@
     },
     "require": {
         "php": ">=5.4",
-        "yurunsoft/yurun-http" : "~v4.2.16",
+        "yurunsoft/yurun-http" : "~4.2",
         "ext-json": "*"
     }
 }
