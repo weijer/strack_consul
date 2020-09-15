@@ -1,42 +1,45 @@
 <?php
 
+declare(strict_types=1);
+
 namespace strack\consul;
 
-final class ConsulResponse
+use strack\consul\exception\ServerException;
+use strack\utils\Arr;
+use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\StreamInterface;
+
+/**
+ * @method int getStatusCode()
+ * @method string getReasonPhrase()
+ * @method StreamInterface getBody()
+ */
+class ConsulResponse
 {
-    private $headers;
-    private $body;
-    private $status;
+    /**
+     * @var ResponseInterface
+     */
+    private $response;
 
-    public function __construct($headers, $body, $status = 200)
+    public function __construct(ResponseInterface $response)
     {
-        $this->headers = $headers;
-        $this->body = $body;
-        $this->status = $status;
+        $this->response = $response;
     }
 
-    public function getHeaders()
+    public function __call($name, $arguments)
     {
-        return $this->headers;
+        return $this->response->{$name}(...$arguments);
     }
 
-    public function getBody()
+    public function json(string $key = null, $default = null)
     {
-        return $this->getArray();
-    }
-
-    public function getStatusCode()
-    {
-        return $this->status;
-    }
-
-    public function getJson()
-    {
-        return $this->body;
-    }
-
-    public function getArray()
-    {
-        return json_decode($this->body, true);
+        if ($this->response->getHeaderLine('Content-Type') !== 'application/json') {
+            throw new ServerException('The Content-Type of response is not equal application/json');
+        }
+        $data = json_decode((string) $this->response->getBody(), true);
+        if (! $key) {
+            return $data;
+        }
+        return Arr::get($data, $key, $default);
     }
 }
